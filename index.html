@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Capoeira Song &amp; Rhythm App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ── Header ──────────────────────────────────────────────────────────── -->
+  <header class="app-header">
+    <h1>Capoeira Songs</h1>
+    <p class="app-subtitle">Song &amp; Rhythm Compendium</p>
+  </header>
+
+  <!-- ── Top-level tab navigation ─────────────────────────────────────────── -->
+  <nav class="top-tab-nav" role="tablist" aria-label="Categories">
+    <button class="top-tab active" data-category="all"      role="tab" aria-selected="true">All</button>
+    <button class="top-tab"        data-category="capoeira" role="tab" aria-selected="false">Capoeira</button>
+    <button class="top-tab"        data-category="samba"    role="tab" aria-selected="false">Samba</button>
+    <button class="top-tab"        data-category="maculele" role="tab" aria-selected="false">Maculelê</button>
+  </nav>
+
+  <!-- ── Sub-nav (Capoeira rhythms) ────────────────────────────────────────── -->
+  <nav class="sub-nav" id="sub-nav" role="tablist" aria-label="Capoeira rhythms" hidden>
+    <button class="sub-tab active" data-rhythm="all"                role="tab" aria-selected="true">All Songs</button>
+    <button class="sub-tab" data-rhythm="ladainha"          role="tab" aria-selected="false">Ladainhas</button>
+    <button class="sub-tab" data-rhythm="angola"            role="tab" aria-selected="false">Angola</button>
+    <button class="sub-tab" data-rhythm="sao-bento-pequeno" role="tab" aria-selected="false">São Bento Pequeno</button>
+    <button class="sub-tab" data-rhythm="sao-bento-grande"  role="tab" aria-selected="false">São Bento Grande</button>
+    <button class="sub-tab" data-rhythm="iuna"              role="tab" aria-selected="false">Iúna</button>
+    <button class="sub-tab" data-rhythm="cavalaria"         role="tab" aria-selected="false">Cavalaria</button>
+    <button class="sub-tab" data-rhythm="benguela"          role="tab" aria-selected="false">Benguela</button>
+  </nav>
+
+  <!-- ── Mixer (shown only when a sub-rhythm is active) ────────────────────── -->
+  <section class="mixer" id="mixer" aria-label="Multitrack Mixer" hidden>
+    <div class="mixer-header">
+      <div class="mixer-title">Multitrack Mixer — <span id="mixer-rhythm-label">Angola</span></div>
+      <div class="master-vol-row">
+        <label for="master-vol-slider" class="speed-label">Master Vol</label>
+        <input id="master-vol-slider" type="range" min="0" max="100" step="1" value="100" aria-label="Master volume" />
+        <span id="master-vol-display">100%</span>
+      </div>
+    </div>
+
+    <div class="mixer-instruments" id="mixer-instruments">
+      <div class="inst-wrap">
+        <button class="inst-btn active" data-inst="gunga">
+          <img class="inst-icon" src="Instrument Icons/Gunga.png" alt="Gunga" />
+          <span class="inst-name">Gunga</span>
+        </button>
+        <input type="range" class="vol-slider" data-inst="gunga" min="0" max="100" step="1" value="100" aria-label="Gunga volume" />
+      </div>
+      <div class="inst-wrap">
+        <button class="inst-btn active" data-inst="medio">
+          <img class="inst-icon" src="Instrument Icons/Medio.png" alt="Médio" />
+          <span class="inst-name">Médio</span>
+        </button>
+        <input type="range" class="vol-slider" data-inst="medio" min="0" max="100" step="1" value="100" aria-label="Médio volume" />
+      </div>
+      <div class="inst-wrap">
+        <button class="inst-btn active" data-inst="viola">
+          <img class="inst-icon" src="Instrument Icons/Viola.png" alt="Viola" />
+          <span class="inst-name">Viola</span>
+        </button>
+        <input type="range" class="vol-slider" data-inst="viola" min="0" max="100" step="1" value="100" aria-label="Viola volume" />
+      </div>
+      <div class="inst-wrap">
+        <button class="inst-btn active" data-inst="pandeiro">
+          <img class="inst-icon" src="Instrument Icons/Pandeiro.png" alt="Pandeiro" />
+          <span class="inst-name">Pandeiro</span>
+        </button>
+        <input type="range" class="vol-slider" data-inst="pandeiro" min="0" max="100" step="1" value="100" aria-label="Pandeiro volume" />
+      </div>
+      <div class="inst-wrap">
+        <button class="inst-btn active" data-inst="atabaque">
+          <img class="inst-icon" src="Instrument Icons/Atabaque.png" alt="Atabaque" />
+          <span class="inst-name">Atabaque</span>
+        </button>
+        <input type="range" class="vol-slider" data-inst="atabaque" min="0" max="100" step="1" value="100" aria-label="Atabaque volume" />
+      </div>
+      <div class="inst-wrap">
+        <button class="inst-btn active" data-inst="palmas">
+          <img class="inst-icon" src="Instrument Icons/Palmas.png" alt="Palmas" />
+          <span class="inst-name">Palmas</span>
+        </button>
+        <input type="range" class="vol-slider" data-inst="palmas" min="0" max="100" step="1" value="100" aria-label="Palmas volume" />
+      </div>
+    </div>
+
+    <div class="mixer-controls">
+      <button class="play-btn" id="play-btn">&#9654; Play</button>
+
+      <div class="speed-row">
+        <label for="speed-slider" class="speed-label">Speed</label>
+        <input id="speed-slider" type="range" min="0.5" max="2.0" step="0.1" value="1.0" aria-label="Playback speed" />
+        <span id="speed-display">1.0×</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Main two-column layout ─────────────────────────────────────────────── -->
+  <div class="main-layout">
+
+    <!-- ── Video Panel ────────────────────────────────────────────────────── -->
+    <aside class="video-panel" id="video-panel" aria-label="Video player and queue">
+
+      <div class="video-wrap">
+        <div class="video-player-area" id="video-player-area">
+          <!-- JS renders placeholder or YT player here -->
+        </div>
+      </div>
+
+      <div class="now-playing-section">
+        <div class="now-playing-label">Now Playing</div>
+        <div class="now-playing-title" id="now-playing-title">—</div>
+      </div>
+
+      <div class="queue-section">
+        <div class="queue-label">Up Next</div>
+        <div class="queue-list" id="queue-list">
+          <!-- Rendered by script.js -->
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ── Song list panel ────────────────────────────────────────────────── -->
+    <div class="content-panel">
+      <div class="search-bar">
+        <input
+          type="search"
+          id="search-input"
+          placeholder="Search songs…"
+          aria-label="Search songs"
+        />
+      </div>
+      <main class="song-list" id="song-list" role="main">
+        <!-- Populated by script.js -->
+      </main>
+    </div>
+
+  </div><!-- /.main-layout -->
+
+  <script src="script.js"></script>
+</body>
+</html>

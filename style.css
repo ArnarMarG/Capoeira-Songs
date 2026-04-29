@@ -1,0 +1,798 @@
+/* ── Variables ───────────────────────────────────────────────────── */
+:root {
+  --green:       #009c3b;
+  --green-dark:  #006b29;
+  --green-light: #e6f5ec;
+  --yellow:      #ffdf00;
+  --yellow-dark: #d4b800;
+  --blue:        #002776;
+  --blue-mid:    #1a52c4;
+  --white:       #ffffff;
+  --gray-100:    #f8f9fa;
+  --gray-200:    #e9ecef;
+  --gray-400:    #ced4da;
+  --gray-600:    #6c757d;
+  --gray-800:    #343a40;
+  --radius:      10px;
+  --shadow:      0 2px 8px rgba(0,0,0,0.10);
+  --transition:  0.22s ease;
+}
+
+/* ── Reset / Base ────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--gray-100);
+  color: var(--gray-800);
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+
+/* ── Header ──────────────────────────────────────────────────────── */
+.app-header {
+  background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 100%);
+  color: var(--white);
+  padding: 20px 16px 14px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+}
+.app-header h1 {
+  font-size: 1.7rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.app-subtitle {
+  font-size: 0.85rem;
+  opacity: 0.85;
+  margin-top: 4px;
+}
+
+/* ── Top Tab Navigation ──────────────────────────────────────────── */
+.top-tab-nav {
+  display: flex;
+  background: var(--green-dark);
+  border-bottom: 3px solid var(--green);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.top-tab-nav::-webkit-scrollbar { display: none; }
+
+.top-tab {
+  flex: 1;
+  padding: 14px 16px;
+  border: none;
+  background: transparent;
+  color: rgba(255,255,255,0.75);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -3px;
+  transition: color var(--transition), border-color var(--transition);
+  white-space: nowrap;
+  min-height: 48px;
+  letter-spacing: 0.3px;
+}
+.top-tab:hover {
+  color: var(--yellow);
+}
+.top-tab.active {
+  color: var(--yellow);
+  border-bottom-color: var(--yellow);
+  font-weight: 700;
+}
+
+/* ── Sub-nav (Capoeira rhythms) ──────────────────────────────────── */
+.sub-nav {
+  display: flex;
+  overflow-x: auto;
+  background: #005522;
+  scrollbar-width: none;
+  padding: 6px 8px;
+  gap: 6px;
+}
+.sub-nav::-webkit-scrollbar { display: none; }
+.sub-nav[hidden] { display: none; }
+
+.sub-tab {
+  flex-shrink: 0;
+  padding: 8px 16px;
+  border: none;
+  background: rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.85);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 20px;
+  white-space: nowrap;
+  transition: background var(--transition), color var(--transition);
+  min-height: 36px;
+}
+.sub-tab:hover {
+  background: rgba(255,223,0,0.25);
+  color: var(--yellow);
+}
+.sub-tab.active {
+  background: var(--yellow);
+  color: #002200;
+  font-weight: 700;
+}
+
+/* ── Mixer ───────────────────────────────────────────────────────── */
+.mixer {
+  background: var(--blue);
+  padding: 16px;
+  margin: 12px 12px 0;
+  border-radius: var(--radius);
+  box-shadow: 0 4px 16px rgba(0,39,118,0.35);
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.mixer[hidden] { display: none !important; }
+
+.mixer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.mixer-title {
+  color: var(--yellow);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  white-space: nowrap;
+}
+
+/* Master volume row */
+.master-vol-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  justify-content: flex-end;
+  min-width: 140px;
+}
+.master-vol-row .speed-label {
+  white-space: nowrap;
+}
+#master-vol-slider {
+  flex: 1;
+  max-width: 110px;
+  accent-color: var(--yellow);
+  cursor: pointer;
+}
+#master-vol-display {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--yellow);
+  min-width: 36px;
+  text-align: right;
+}
+
+/* Instrument toggle buttons */
+.mixer-instruments {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+/* Instrument wrapper: button + volume slider stacked */
+.inst-wrap {
+  flex: 1;
+  min-width: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+}
+
+/* Per-instrument volume slider */
+.vol-slider {
+  width: 100%;
+  accent-color: var(--yellow);
+  cursor: pointer;
+  height: 4px;
+}
+
+.inst-btn {
+  width: 100%;
+  min-width: 60px;
+  min-height: 64px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 6px;
+  background: rgba(255,255,255,0.08);
+  border: 2px solid rgba(255,223,0,0.5);
+  border-radius: 8px;
+  color: var(--yellow);
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+  /* Active glow */
+  box-shadow: 0 0 14px rgba(255,223,0,0.6);
+}
+.inst-btn .inst-icon {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+}
+.inst-btn .inst-name {
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+.inst-btn:hover {
+  background: rgba(255,223,0,0.15);
+}
+/* Muted state */
+.inst-btn.muted {
+  opacity: 0.4;
+  box-shadow: none;
+  border-color: rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.5);
+}
+
+/* Play/Pause button */
+.mixer-controls {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.play-btn {
+  padding: 12px 32px;
+  background: var(--green);
+  color: var(--white);
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 48px;
+  transition: background var(--transition), transform 0.1s;
+  letter-spacing: 0.3px;
+  flex-shrink: 0;
+}
+.play-btn:hover {
+  background: var(--green-dark);
+  transform: scale(1.03);
+}
+.play-btn.playing {
+  background: #c0392b;
+}
+.play-btn.playing:hover {
+  background: #a93226;
+}
+
+/* Speed slider row */
+.speed-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+.speed-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.8);
+  white-space: nowrap;
+}
+#speed-slider {
+  flex: 1;
+  accent-color: var(--yellow);
+  cursor: pointer;
+}
+#speed-display {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--yellow);
+  min-width: 36px;
+  text-align: right;
+}
+
+/* ── Search Bar ──────────────────────────────────────────────────── */
+.search-bar {
+  background: var(--white);
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--gray-200);
+  margin-top: 12px;
+}
+#search-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid var(--gray-400);
+  border-radius: 24px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  min-height: 44px;
+}
+#search-input:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(0,156,59,0.15);
+}
+
+/* ── Song List Container ─────────────────────────────────────────── */
+.song-list {
+  max-width: 720px;
+  margin: 16px auto;
+  padding: 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ── Empty / No-results message ──────────────────────────────────── */
+.empty-msg {
+  text-align: center;
+  color: var(--gray-600);
+  padding: 48px 24px;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+.empty-msg .empty-icon {
+  display: block;
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+}
+
+/* ── Song Card ───────────────────────────────────────────────────── */
+.song-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  border: 1px solid var(--gray-200);
+  transition: box-shadow var(--transition);
+}
+.song-card:hover { box-shadow: 0 4px 14px rgba(0,0,0,0.14); }
+
+/* ── Accordion Header ────────────────────────────────────────────── */
+.song-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  cursor: pointer;
+  background: var(--white);
+  user-select: none;
+  gap: 8px;
+  min-height: 52px;
+}
+.song-header:hover { background: var(--green-light); }
+.song-header:focus-visible {
+  outline: 3px solid var(--blue-mid);
+  outline-offset: -3px;
+}
+
+/* ── Song action buttons (play / queue) ──────────────────────────── */
+.song-actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+.song-action-btn {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--gray-200);
+  border-radius: 5px;
+  background: var(--gray-100);
+  color: var(--gray-600);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  flex-shrink: 0;
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+}
+.song-action-btn.has-link:hover {
+  background: var(--green);
+  color: var(--white);
+  border-color: var(--green-dark);
+}
+.song-action-btn.no-link:hover {
+  background: #c0392b;
+  color: var(--white);
+  border-color: #922b21;
+}
+.song-action-btn svg { pointer-events: none; }
+
+.song-title-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 0;
+}
+.song-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  line-height: 1.3;
+}
+.song-rhythm-tags {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.rhythm-badge {
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 10px;
+  background: var(--yellow);
+  color: var(--green-dark);
+  letter-spacing: 0.3px;
+}
+
+.song-chevron {
+  font-size: 0.9rem;
+  color: var(--gray-600);
+  transition: transform var(--transition);
+  flex-shrink: 0;
+}
+.song-card.open .song-chevron { transform: rotate(180deg); }
+
+/* ── Accordion Body ──────────────────────────────────────────────── */
+.song-body {
+  display: none;
+  border-top: 1px solid var(--gray-200);
+  padding: 16px 18px 20px;
+}
+.song-card.open .song-body { display: block; }
+
+/* Lyrics sections */
+.lyrics-section { margin-bottom: 16px; }
+
+.lyrics-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--green-dark);
+  margin-bottom: 6px;
+}
+
+.lyrics-pt,
+.lyrics-en {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--gray-800);
+  white-space: pre-wrap;
+}
+
+/* Bold chorus lines */
+.lyrics-pt strong,
+.lyrics-en strong {
+  font-weight: 700;
+  color: var(--gray-800);
+}
+
+/* Tip section */
+.tip-section {
+  margin-top: 16px;
+  margin-left: 16px;
+  padding: 10px 14px;
+  background: #fffbe6;
+  border-left: 3px solid var(--yellow-dark);
+  border-radius: 0 6px 6px 0;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: #5a4500;
+}
+.tip-section .tip-label {
+  font-weight: 700;
+  color: #7a5c00;
+  display: inline;
+  margin-right: 4px;
+}
+
+/* ── Ladainha Two-Column Card ────────────────────────────────────────── */
+.ladainha-body {
+  gap: 20px;
+  align-items: flex-start;
+}
+.song-card.open .ladainha-body {
+  display: flex;
+}
+
+.ladainha-lyrics-col {
+  flex: 1;
+  min-width: 0;
+  border-right: 1px solid var(--gray-200);
+  padding-right: 20px;
+}
+
+.ladainha-info-col {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ladainha-info-block {
+  padding: 12px 14px;
+  border-radius: 6px;
+  background: var(--gray-100);
+  border-left: 3px solid var(--green);
+}
+
+.ladainha-info-block .lyrics-label {
+  color: var(--green-dark);
+  margin-bottom: 6px;
+}
+
+.ladainha-info-text {
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--gray-800);
+}
+.ladainha-info-text p {
+  margin: 0 0 0.75em;
+}
+.ladainha-info-text p:last-of-type {
+  margin-bottom: 0;
+}
+.story-author {
+  margin-top: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--green-dark);
+  text-align: right;
+}
+.ladainha-author {
+  margin-top: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--gray-600);
+}
+
+@media (max-width: 600px) {
+  .ladainha-body {
+    flex-direction: column;
+    gap: 16px;
+  }
+  .ladainha-lyrics-col {
+    border-right: none;
+    padding-right: 0;
+    border-bottom: 1px solid var(--gray-200);
+    padding-bottom: 16px;
+  }
+}
+
+/* ── Responsive ──────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .app-header h1      { font-size: 1.4rem; }
+  .song-list          { padding: 0 8px; }
+  .song-header        { padding: 12px 14px; }
+  .song-body          { padding: 14px 14px 18px; }
+  .mixer              { margin: 8px 8px 0; padding: 12px; }
+  .mixer-instruments  { gap: 6px; }
+  .inst-wrap          { min-width: 54px; }
+  .play-btn           { padding: 10px 22px; font-size: 0.9rem; }
+  .top-tab            { font-size: 0.88rem; padding: 12px 12px; }
+}
+
+/* ── Main two-column layout ──────────────────────────────────────── */
+.main-layout {
+  display: flex;
+  align-items: flex-start;
+}
+
+/* ── Video Panel ─────────────────────────────────────────────────── */
+.video-panel {
+  flex: 0 0 25%;
+  max-width: 320px;
+  min-width: 180px;
+  background: var(--white);
+  border-right: 1px solid var(--gray-200);
+  padding: 12px;
+  position: sticky;
+  top: 0;
+  max-height: 100vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+.video-panel::-webkit-scrollbar { width: 4px; }
+.video-panel::-webkit-scrollbar-thumb { background: var(--gray-400); border-radius: 4px; }
+
+/* ── Content panel (search + song list) ──────────────────────────── */
+.content-panel {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Remove auto-centering from search bar — content-panel handles width */
+.search-bar {
+  margin-top: 0;
+  border-top: 1px solid var(--gray-200);
+}
+
+/* ── Video player (16:9 ratio) ───────────────────────────────────── */
+.video-wrap {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;
+  background: #111;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.video-player-area {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* YouTube iframe rendered by the IFrame API */
+.video-player-area iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Placeholder shown before any video is selected */
+.video-placeholder-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #1a1a2e;
+  color: rgba(255,255,255,0.45);
+  font-size: 0.78rem;
+  text-align: center;
+  padding: 12px;
+  line-height: 1.4;
+}
+.video-placeholder-icon {
+  font-size: 1.8rem;
+  opacity: 0.4;
+  margin-bottom: 4px;
+}
+
+/* ── Now Playing ─────────────────────────────────────────────────── */
+.now-playing-section {
+  margin-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--gray-200);
+}
+.now-playing-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--green-dark);
+  margin-bottom: 4px;
+}
+.now-playing-title {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--gray-800);
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+/* ── Queue ───────────────────────────────────────────────────────── */
+.queue-section { margin-top: 10px; }
+
+.queue-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: var(--gray-600);
+  margin-bottom: 6px;
+}
+
+.queue-item {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 10px;
+  border-radius: 6px;
+  margin-bottom: 4px;
+  font-size: 0.8rem;
+  min-height: 36px;
+  box-sizing: border-box;
+}
+
+/* Empty slot — decorative only, not interactive */
+.queue-empty {
+  background: var(--gray-100);
+  border: 1.5px dashed var(--gray-200);
+  color: var(--gray-400);
+  cursor: default;
+  pointer-events: none;
+}
+.queue-add-icon {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--gray-300);
+  flex-shrink: 0;
+  line-height: 1;
+}
+.queue-add-text { font-size: 0.78rem; }
+
+/* Filled slot */
+.queue-filled {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  cursor: grab;
+}
+.queue-filled:active { cursor: grabbing; }
+.queue-filled.dragging { opacity: 0.35; }
+.queue-filled.drag-over {
+  border-top: 2px solid var(--green);
+  background: var(--green-light);
+}
+
+/* Drag handle */
+.queue-drag-handle {
+  color: var(--gray-300);
+  font-size: 0.95rem;
+  flex-shrink: 0;
+  user-select: none;
+  line-height: 1;
+  cursor: grab;
+}
+.queue-item-num {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--gray-400);
+  min-width: 14px;
+  text-align: center;
+  flex-shrink: 0;
+}
+.queue-item-title {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--gray-800);
+  font-weight: 500;
+  font-size: 0.78rem;
+}
+.queue-remove-btn {
+  background: none;
+  border: none;
+  color: var(--gray-400);
+  cursor: pointer;
+  font-size: 0.82rem;
+  padding: 2px 4px;
+  border-radius: 3px;
+  flex-shrink: 0;
+  line-height: 1;
+  transition: color var(--transition), background var(--transition);
+}
+.queue-remove-btn:hover { color: #c0392b; background: #fde8e8; }
+
+
+/* ── Mobile: stack video above content ───────────────────────────── */
+@media (max-width: 700px) {
+  .main-layout    { flex-direction: column; }
+  .video-panel    { flex: none; width: 100%; max-width: 100%;
+                    position: static; border-right: none;
+                    border-bottom: 1px solid var(--gray-200);
+                    max-height: none; }
+}
