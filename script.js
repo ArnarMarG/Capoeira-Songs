@@ -289,7 +289,7 @@ const SONGS_DB = [
     "title": "Beira Mar",
     "lyrics_pt": "Beira mar iô iô, beira mar iâ iâ.\n**Beira mar iô iô, beira mar iâ iâ.**\nBeira mar iô iô, beira mar iâ iâ.\n**Beira mar iô iô, beira mar iâ iâ.**\nBeira mar, beira mar.\n**É de iô iô.**\nBeira mar, beira mar.\n**É de iâ iâ.**\nBeira mar, beira mar.\n**É de iô iô.**\nBeira mar, beira mar.\n**É de iâ iâ.**\nBeira mar, iô iô.\n**É de iô iô.**\nBeira mar iâ iâ.\n**É de iâ iâ.**\nIâ iâ, iô iô.\n**É de iô iô.**\nIô iô, iâ iâ.\n**É de iâ iâ.**",
     "lyrics_en": "By the sea iô iô, by the sea iâ iâ.\n**By the sea iô iô, by the sea iâ iâ.**\nBy the sea iô iô, by the sea iâ iâ.\n**By the sea iô iô, by the sea iâ iâ.**\nBy the sea, by the sea.\n**It is iô iô.**\nBy the sea, by the sea.\n**It is iâ iâ.**\nBy the sea, by the sea.\n**It is iô iô.**\nBy the sea, by the sea.\n**It is iâ iâ.**\nBy the sea, iô iô.\n**It is iô iô.**\nBy the sea iâ iâ.\n**It is iâ iâ.**\nIâ iâ, iô iô.\n**It is iô iô.**\nIô iô, iâ iâ.\n**It is iâ iâ.**",
-    "tip": "",
+    "tip": "During the time of slavery, these titles were used within plantation households. Ioio (iô iô) was a nickname for the young master (Sinhozinho) and Iaiá (iâ iâ) a nickname for the young mistress (Sinházinha).",
     "rhythm_tags": [],
     "category": "capoeira",
     "id": 33,
